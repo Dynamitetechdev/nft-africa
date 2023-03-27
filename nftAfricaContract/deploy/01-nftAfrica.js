@@ -1,12 +1,19 @@
+const { network } = require("hardhat");
 const { verify } = require("../utils/verify");
-
 require("dotenv").config();
+
 module.exports = async ({ deployments, getNamedAccounts }) => {
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
-
+  const chainId = network.config.chainId;
   const args = [];
   const nftAfricaContract = await deploy("NftAfrica", {
+    from: deployer,
+    args: args,
+    log: true,
+  });
+
+  const NFTContract = await deploy("BasicNft", {
     from: deployer,
     args: args,
     log: true,
